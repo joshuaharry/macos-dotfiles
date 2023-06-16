@@ -1,6 +1,7 @@
 ~/.config/dotfiles.dots
 ~/bin
 ~/.zshrc
+~/.zprofile
 ~/.aliases.sh
 ~/.zsh-syntax-highlighting
 ~/.vimrc
