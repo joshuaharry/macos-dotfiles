@@ -1,8 +1,3 @@
--- I tried using neovim to edit JavaScript and TypeScript code, but
--- I ran into too many problems with TreeSitter indentation and the
--- language server support. Nonetheless, I am committing this code
--- for posterity in case I want to try again someday.
---
 -- Configure tabs/spaces/line numbers
 vim.opt.number = true
 vim.opt.tabstop = 2
@@ -35,16 +30,21 @@ vim.opt.rtp:prepend(lazypath)
 -- Install useful plugins
 require("lazy").setup({
   "nvim-treesitter/nvim-treesitter",
-  -- Use coc.nvim rather than the native LSP
+  "windwp/nvim-autopairs",
+  "windwp/nvim-ts-autotag",
+  -- TreeSitter struggles with indenting TSX files, so we use this plugin
+  -- as a workaround for now.
+  "MaxMEllon/vim-jsx-pretty",
   {
     "neoclide/coc.nvim",
     branch = "master",
     build = "yarn install --frozen-lockfile",
   },
-  "windwp/nvim-autopairs",
 })
 
 vim.cmd.colorscheme('desert')
+
+require("nvim-autopairs").setup({})
 
 require('nvim-treesitter.configs').setup({
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
@@ -70,7 +70,7 @@ require('nvim-treesitter.configs').setup({
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
+    additional_vim_regex_highlighting = true,
   },
 })
 
