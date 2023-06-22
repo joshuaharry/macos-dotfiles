@@ -54,7 +54,17 @@ require("lazy").setup({
 vim.cmd.colorscheme('desert')
 
 require("nvim-autopairs").setup({})
-
+require('snippy').setup({
+  mappings = {
+    is = {
+      ['<Tab>'] = 'expand_or_advance',
+      ['<S-Tab>'] = 'previous',
+    },
+    nx = {
+      ['<leader>x'] = 'cut_text',
+    },
+  },
+})
 require('nvim-treesitter.configs').setup({
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
   ensure_installed = {
@@ -68,6 +78,7 @@ require('nvim-treesitter.configs').setup({
     "typescript",
     "javascript",
     "svelte",
+    "json",
   },
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
