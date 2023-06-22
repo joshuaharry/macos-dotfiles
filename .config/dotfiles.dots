@@ -1,7 +1,8 @@
-~/.config/dotfiles.dots
-~/bin
-~/.zshrc
-~/.zprofile
 ~/.aliases.sh
-~/.zsh-syntax-highlighting
+~/.config/dotfiles.dots
+~/.config/nvim
 ~/.vimrc
+~/.zprofile
+~/.zsh-syntax-highlighting
+~/.zshrc
+~/bin
