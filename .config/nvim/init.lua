@@ -4,6 +4,7 @@ vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
+vim.opt.hlsearch = false
 vim.g.mapleader = " "
 
 -- Useful vanilla keybindings
@@ -35,11 +36,19 @@ require("lazy").setup({
   -- TreeSitter struggles with indenting TSX files, so we use this plugin
   -- as a workaround for now.
   "MaxMEllon/vim-jsx-pretty",
+
+  "dcampos/nvim-snippy",
+  "tpope/vim-commentary",
   {
     "neoclide/coc.nvim",
-    branch = "master",
+    branch = "release",
     build = "yarn install --frozen-lockfile",
   },
+  {
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.2',
+    dependencies = { 'nvim-lua/plenary.nvim' }
+  }
 })
 
 vim.cmd.colorscheme('desert')
@@ -76,3 +85,15 @@ require('nvim-treesitter.configs').setup({
 
 -- Useful plugin-specific keybidnings
 vim.api.nvim_set_keymap('n', '<leader>p', ':call CocAction("format")<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sf', ':Telescope find_files<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sg', ':Telescope live_grep<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sb', ':Telescope buffers<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sh', ':Telescope help_tags<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'gd', '<Plug>(coc-definition)', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'gy', '<Plug>(coc-type-definition)', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'gi', '<Plug>(coc-implementation)', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'gr', '<Plug>(coc-references)', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<C-n>', 'coc#pum#visible() ? coc#pum#next(1) : coc#refresh()',
+  { noremap = true, silent = true, expr = true })
+vim.api.nvim_set_keymap('i', '<CR>', 'coc#pum#visible() ? coc#pum#confirm() : v:lua.MPairs.completion_confirm()',
+  { noremap = true, silent = true, expr = true })
