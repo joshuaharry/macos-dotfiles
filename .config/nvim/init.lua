@@ -6,6 +6,7 @@ vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.hlsearch = false
 vim.g.mapleader = " "
+vim.g.maplocalleader = ","
 
 -- Useful vanilla keybindings
 vim.api.nvim_set_keymap('n', 'q', ':q<CR>', { noremap = true, silent = true })
@@ -36,6 +37,8 @@ require("lazy").setup({
   -- TreeSitter struggles with indenting TSX files, so we use this plugin
   -- as a workaround for now.
   "MaxMEllon/vim-jsx-pretty",
+  -- Ditto with Svelte...
+  "evanleck/vim-svelte",
 
   "dcampos/nvim-snippy",
   "tpope/vim-commentary",
@@ -48,7 +51,8 @@ require("lazy").setup({
     'nvim-telescope/telescope.nvim',
     tag = '0.1.2',
     dependencies = { 'nvim-lua/plenary.nvim' }
-  }
+  },
+  "Olical/conjure",
 })
 
 vim.cmd.colorscheme('desert')
