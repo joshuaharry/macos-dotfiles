@@ -2,5 +2,6 @@
   "suggest.autoTrigger": "none",
   "inlayHint.enable": false,
   "solargraph.formatting": true,
-  "svelte.enable-ts-plugin": true
+  "python.formatting.provider": "black",
+  "svelte.enable-ts-plugin": true,
 }
