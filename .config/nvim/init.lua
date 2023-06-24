@@ -7,6 +7,10 @@ vim.opt.expandtab = true
 vim.opt.hlsearch = false
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
+-- Make sure that vim-closetag works on ERB files. We have to set this
+-- global variable *before* we configure our plugin manager; otherwise,
+-- the plugin doesn't actually work for mysterious raisins.
+vim.g.closetag_filetypes = "eruby"
 
 -- Useful vanilla keybindings
 vim.api.nvim_set_keymap('n', 'q', ':q<CR>', { noremap = true, silent = true })
@@ -53,9 +57,9 @@ require("lazy").setup({
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
   "Olical/conjure",
+  "Mofiqul/vscode.nvim",
+  "alvan/vim-closetag",
 })
-
-vim.cmd.colorscheme('desert')
 
 require("nvim-autopairs").setup({})
 require('snippy').setup({
@@ -112,3 +116,6 @@ vim.api.nvim_set_keymap('i', '<C-n>', 'coc#pum#visible() ? coc#pum#next(1) : coc
   { noremap = true, silent = true, expr = true })
 vim.api.nvim_set_keymap('i', '<CR>', 'coc#pum#visible() ? coc#pum#confirm() : v:lua.MPairs.completion_confirm()',
   { noremap = true, silent = true, expr = true })
+
+-- Select my colorscheme
+vim.cmd.colorscheme('vscode')
