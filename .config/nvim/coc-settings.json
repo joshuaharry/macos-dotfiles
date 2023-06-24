@@ -2,6 +2,14 @@
   "suggest.autoTrigger": "none",
   "inlayHint.enable": false,
   "solargraph.formatting": true,
+  "html.filetypes": [
+    "html",
+    "handlebars",
+    "htmldjango",
+    "blade",
+    "eruby"
+  ],
+  "html.format.templating": true,
   "python.formatting.provider": "black",
-  "svelte.enable-ts-plugin": true,
+  "svelte.enable-ts-plugin": true
 }
