@@ -60,7 +60,7 @@ require("lazy").setup({
   },
   "Olical/conjure",
   "alvan/vim-closetag",
-  "NLKNguyen/papercolor-theme",
+  "ellisonleao/gruvbox.nvim",
 })
 
 require("nvim-autopairs").setup({})
@@ -120,4 +120,4 @@ vim.api.nvim_set_keymap('i', '<CR>', 'coc#pum#visible() ? coc#pum#confirm() : v:
   { noremap = true, silent = true, expr = true })
 
 vim.o.background = "dark"
-vim.cmd([[colorscheme papercolor]])
+vim.cmd([[colorscheme gruvbox]])
