@@ -19,7 +19,7 @@ vim.api.nvim_set_keymap('n', '<leader>f', 'za', { noremap = true, silent = true 
 -- Make sure that vim-closetag works on ERB files. We have to set this
 -- global variable *before* we configure our plugin manager; otherwise,
 -- the plugin doesn't actually work for mysterious raisins.
-vim.g.closetag_filetypes = "eruby"
+vim.g.closetag_filetypes = "eruby,svelte"
 
 -- Use lazy.nvim to manage plugins
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
