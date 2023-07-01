@@ -60,7 +60,6 @@ require("lazy").setup({
   },
   "Olical/conjure",
   "alvan/vim-closetag",
-  "ellisonleao/gruvbox.nvim",
 })
 
 require("nvim-autopairs").setup({})
@@ -119,5 +118,4 @@ vim.api.nvim_set_keymap('i', '<C-n>', 'coc#pum#visible() ? coc#pum#next(1) : coc
 vim.api.nvim_set_keymap('i', '<CR>', 'coc#pum#visible() ? coc#pum#confirm() : v:lua.MPairs.completion_confirm()',
   { noremap = true, silent = true, expr = true })
 
-vim.o.background = "dark"
-vim.cmd([[colorscheme gruvbox]])
+vim.cmd([[colorscheme desert]])
