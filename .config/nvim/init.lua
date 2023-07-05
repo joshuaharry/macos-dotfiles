@@ -45,7 +45,7 @@ require("lazy").setup({
   "MaxMEllon/vim-jsx-pretty",
   -- Ditto with Svelte...
   "evanleck/vim-svelte",
-
+  "heavenshell/vim-jsdoc",
   "dcampos/nvim-snippy",
   "tpope/vim-commentary",
   {
