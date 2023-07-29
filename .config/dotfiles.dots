@@ -4,5 +4,6 @@
 ~/.vimrc
 ~/.zprofile
 ~/.zsh-syntax-highlighting
+~/.zsh-autosuggestions
 ~/.zshrc
 ~/bin

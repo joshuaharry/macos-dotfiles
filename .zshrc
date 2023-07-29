@@ -3,6 +3,7 @@ set -o vi
 setopt autocd
 eval "$(starship init zsh)"
 source ${HOME}/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ${HOME}/.zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 source ${HOME}/.aliases.sh
 eval "$(direnv hook zsh)"
 function man() {
