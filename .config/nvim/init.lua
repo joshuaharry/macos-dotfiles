@@ -54,6 +54,10 @@ require("lazy").setup({
     build = "yarn install --frozen-lockfile",
   },
   {
+    "joshuaharry/coc-svelte",
+    branch = "master"
+  },
+  {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.2',
     dependencies = { 'nvim-lua/plenary.nvim' }

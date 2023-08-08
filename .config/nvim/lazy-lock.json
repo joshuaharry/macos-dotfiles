@@ -1,4 +1,5 @@
 {
+  "coc-svelte": { "branch": "master", "commit": "7dda98527c0831e287ae8cd1c85cfc958c949d4a" },
   "coc.nvim": { "branch": "release", "commit": "537f12b7b9fe8a5b500dbc40305310ae54e0736f" },
   "conjure": { "branch": "master", "commit": "31a1626273e2bab479b6b8416a137f9edaba7daa" },
   "lazy.nvim": { "branch": "main", "commit": "b7043f2983d7aead78ca902f3f2053907081859a" },
