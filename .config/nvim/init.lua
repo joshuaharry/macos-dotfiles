@@ -18,7 +18,7 @@ vim.api.nvim_set_keymap("n", "<leader>f", "za", { noremap = true, silent = true 
 -- Make sure that vim-closetag works on ERB files. We have to set this
 -- global variable *before* we configure our plugin manager; otherwise,
 -- the plugin doesn't actually work for mysterious raisins.
-vim.g.closetag_filetypes = "eruby,template"
+vim.g.closetag_filetypes = "eruby,template,typescriptreact,javascriptreact"
 
 -- Bootstrap the Plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -65,6 +65,8 @@ require("lazy").setup({
 		event = "InsertEnter",
 		opts = {},
 	},
+  -- Manage HTML completions
+  "alvan/vim-closetag",
 	-- Manage snippets
 	{
 		"dcampos/nvim-snippy",
