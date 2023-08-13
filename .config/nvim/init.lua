@@ -21,8 +21,9 @@ vim.api.nvim_set_keymap('n', '<leader>f', 'za', { noremap = true, silent = true 
 -- the plugin doesn't actually work for mysterious raisins.
 vim.g.closetag_filetypes = "eruby,template"
 
--- Use lazy.nvim to manage plugins
+-- Bootstrap the Plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git",
@@ -35,91 +36,92 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Install useful plugins
+-- Install Plugins
 require("lazy").setup({
-  "nvim-treesitter/nvim-treesitter",
-  "windwp/nvim-autopairs",
-  "windwp/nvim-ts-autotag",
-  -- TreeSitter struggles with indenting TSX files, so we use this plugin
-  -- as a workaround for now.
-  "MaxMEllon/vim-jsx-pretty",
-  -- Ditto with Svelte...
-  "evanleck/vim-svelte",
-  "heavenshell/vim-jsdoc",
-  "dcampos/nvim-snippy",
-  "tpope/vim-commentary",
+  -- Manage language server installations
   {
-    "neoclide/coc.nvim",
-    branch = "release",
-    build = "yarn install --frozen-lockfile",
+    "williamboman/mason.nvim",
+    opts = {},
   },
   {
-    "joshuaharry/coc-svelte",
-    branch = "master"
-  },
-  {
-    'nvim-telescope/telescope.nvim',
-    tag = '0.1.2',
-    dependencies = { 'nvim-lua/plenary.nvim' }
-  },
-  "Olical/conjure",
-  "alvan/vim-closetag",
-})
-
-require("nvim-autopairs").setup({})
-require('snippy').setup({
-  mappings = {
-    is = {
-      ['<Tab>'] = 'expand_or_advance',
-      ['<S-Tab>'] = 'previous',
-    },
-    nx = {
-      ['<leader>x'] = 'cut_text',
+    "williamboman/mason-lspconfig.nvim",
+    opts = {
+      ensure_installed = {"pyright", "gopls"},
+      handlers = { 
+        function(server_name) 
+          require("lspconfig")[server_name].setup({})
+        end 
+      },
     },
   },
-})
-require('nvim-treesitter.configs').setup({
-  -- A list of parser names, or "all" (the five listed parsers should always be installed)
-  ensure_installed = {
-    "c",
-    "lua",
-    "vim",
-    "vimdoc",
-    "query",
-    "python",
-    "tsx",
-    "typescript",
-    "javascript",
-    "svelte",
-    "json",
+  {
+    "neovim/nvim-lspconfig",
   },
-  -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
-  -- Automatically install missing parsers when entering buffer
-  auto_install = true,
-  highlight = {
-    enable = true,
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = true,
+  -- Manage comments
+  {
+    'numToStr/Comment.nvim',
+    opts = {}
+  },
+  -- Manage auto pairs
+  {
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    opts = {}
+  },
+  -- Manage snippets
+  {
+    'dcampos/nvim-snippy',
+    opts = {
+      mappings = {
+        is = {
+          ['<Tab>'] = 'expand_or_advance',
+          ['<S-Tab>'] = 'previous',
+        },
+      },
+    },
+  },
+  'dcampos/cmp-snippy',
+
+  -- Manage autocomplete
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+    },
+    config = function()
+      local cmp = require("cmp")
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            require('snippy').expand_snippet(args.body)
+          end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.abort(),
+          ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item(), {'i','c'}),
+          ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item(), {'i','c'}),
+          -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        }),
+        sources = cmp.config.sources({
+          { name = 'nvim_lsp' },
+          { name = 'snippy' },
+          { name = "path" },
+          {
+            { name= 'buffer' }
+          }
+        })
+      })
+    end
+  },
+  {
+    'projekt0n/github-nvim-theme',
+    config = function ()
+      vim.cmd.colorscheme("github_light_high_contrast")
+    end
   },
 })
-
--- Useful plugin-specific keybidnings
-vim.api.nvim_set_keymap('n', '<leader>p', ':call CocAction("format")<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sf', ':Telescope find_files<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sg', ':Telescope live_grep<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sb', ':Telescope buffers<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sh', ':Telescope help_tags<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'gd', '<Plug>(coc-definition)', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'gy', '<Plug>(coc-type-definition)', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'gi', '<Plug>(coc-implementation)', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'gr', '<Plug>(coc-references)', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '<C-n>', 'coc#pum#visible() ? coc#pum#next(1) : coc#refresh()',
-  { noremap = true, silent = true, expr = true })
-vim.api.nvim_set_keymap('i', '<CR>', 'coc#pum#visible() ? coc#pum#confirm() : v:lua.MPairs.completion_confirm()',
-  { noremap = true, silent = true, expr = true })
-
-vim.cmd([[colorscheme desert]])
