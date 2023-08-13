@@ -13,7 +13,7 @@
   "nvim-cmp": { "branch": "main", "commit": "51f1e11a89ec701221877532ee1a23557d291dd5" },
   "nvim-lspconfig": { "branch": "master", "commit": "a981d4447b92c54a4d464eb1a76b799bc3f9a771" },
   "nvim-snippy": { "branch": "master", "commit": "7b50933b44ebefc85bf1734eadc4fcfcbbc781c7" },
-  "papercolor-theme": { "branch": "master", "commit": "9051480ad9129ff4ab4fffb38b44779b9081626f" },
+  "onedark.nvim": { "branch": "master", "commit": "09b71d84bd2524438e48c0aa5b54d855cc72af32" },
   "plenary.nvim": { "branch": "master", "commit": "267282a9ce242bbb0c5dc31445b6d353bed978bb" },
   "telescope.nvim": { "branch": "master", "commit": "776b509f80dd49d8205b9b0d94485568236d1192" },
   "vim-closetag": { "branch": "master", "commit": "d0a562f8bdb107a50595aefe53b1a690460c3822" },

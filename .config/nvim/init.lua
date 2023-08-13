@@ -45,7 +45,13 @@ require("lazy").setup({
 	{
 		"williamboman/mason-lspconfig.nvim",
 		opts = {
-			ensure_installed = { "pyright", "gopls", "svelte" },
+			ensure_installed = {
+				"pyright",
+				"gopls",
+				"svelte",
+				"tsserver",
+				"eslint",
+			},
 			handlers = {
 				function(server_name)
 					require("lspconfig")[server_name].setup({})
@@ -65,8 +71,8 @@ require("lazy").setup({
 		event = "InsertEnter",
 		opts = {},
 	},
-  -- Manage HTML completions
-  "alvan/vim-closetag",
+	-- Manage HTML completions
+	"alvan/vim-closetag",
 	-- Manage snippets
 	{
 		"dcampos/nvim-snippy",
@@ -126,10 +132,10 @@ require("lazy").setup({
 	},
 	-- Manage colorscheme
 	{
-		"NLKNguyen/papercolor-theme",
+		"navarasu/onedark.nvim",
 		config = function()
-			vim.opt.background = "light"
-			vim.cmd.colorscheme("papercolor")
+			opts = { style = "light" }
+			vim.cmd.colorscheme("onedark")
 		end,
 	},
 	-- Manage Fuzzy Finding
