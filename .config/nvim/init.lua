@@ -51,10 +51,21 @@ require("lazy").setup({
 				"svelte",
 				"tsserver",
 				"eslint",
+				"solargraph",
 			},
 			handlers = {
 				function(server_name)
 					require("lspconfig")[server_name].setup({})
+				end,
+				["solargraph"] = function()
+					require("lspconfig").solargraph.setup({
+            filetypes = {"ruby", "rakefile"},
+						settings = {
+							solargraph = {
+								diagnostics = true,
+							},
+						},
+					})
 				end,
 			},
 		},
