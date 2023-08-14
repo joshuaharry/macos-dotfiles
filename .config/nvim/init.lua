@@ -59,7 +59,7 @@ require("lazy").setup({
 				end,
 				["solargraph"] = function()
 					require("lspconfig").solargraph.setup({
-            filetypes = {"ruby", "rakefile"},
+						filetypes = { "ruby", "rakefile" },
 						settings = {
 							solargraph = {
 								diagnostics = true,
