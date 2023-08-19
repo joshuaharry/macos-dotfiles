@@ -107,6 +107,7 @@ require("lazy").setup({
 		},
 		config = function()
 			local cmp = require("cmp")
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = true })
 			cmp.setup({
 				snippet = {
 					expand = function(args)
