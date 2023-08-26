@@ -113,15 +113,26 @@ require("lazy").setup({
 
 			-- Make error messages appear inside popups
 			vim.o.updatetime = 250
+      
 			vim.diagnostic.config({
-        virtual_text = false,
+				virtual_text = true,
 				float = {
 					source = "always",
 					width = 80,
 					border = border,
 				},
 			})
-      vim.cmd("autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus = false})")
+
+			vim.api.nvim_create_autocmd({
+				"CursorHold",
+				"CursorHoldI",
+			}, {
+				callback = function()
+					if not cmp.visible() then
+						vim.diagnostic.open_float(nil, { focus = false })
+					end
+				end,
+			})
 
 			cmp.setup({
 				snippet = {
