@@ -5,6 +5,7 @@ vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.hlsearch = false
+vim.opt.background = "light"
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
@@ -107,7 +108,21 @@ require("lazy").setup({
 		},
 		config = function()
 			local cmp = require("cmp")
-      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = true })
+			-- Set up jump to definition
+			vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true })
+
+			-- Make error messages appear inside popups
+			vim.o.updatetime = 250
+			vim.diagnostic.config({
+        virtual_text = false,
+				float = {
+					source = "always",
+					width = 80,
+					border = border,
+				},
+			})
+      vim.cmd("autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus = false})")
+
 			cmp.setup({
 				snippet = {
 					expand = function(args)
@@ -144,10 +159,9 @@ require("lazy").setup({
 	},
 	-- Manage colorscheme
 	{
-		"navarasu/onedark.nvim",
+		"NLKNguyen/papercolor-theme",
 		config = function()
-			opts = { style = "light" }
-			vim.cmd.colorscheme("onedark")
+			vim.cmd.colorscheme("papercolor")
 		end,
 	},
 	-- Manage Fuzzy Finding
