@@ -1,0 +1,8 @@
+#!/bin/sh
+if [ "$1" = start ]; then
+  "$N_PREFIX"/bin/npm "$@"
+elif [ "$1" = test ]; then
+  "$N_PREFIX"/bin/npm "$@"
+else
+  "$N_PREFIX"/bin/npm run "$@"
+fi
