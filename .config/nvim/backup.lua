@@ -1,11 +1,5 @@
--- Configure tabs/spaces/line numbers
-vim.opt.number = true
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
 vim.opt.hlsearch = false
-vim.opt.background = "light"
+vim.opt.background = "dark"
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
@@ -19,7 +13,7 @@ vim.api.nvim_set_keymap("n", "<leader>f", "za", { noremap = true, silent = true 
 -- Make sure that vim-closetag works on ERB files. We have to set this
 -- global variable *before* we configure our plugin manager; otherwise,
 -- the plugin doesn't actually work for mysterious raisins.
-vim.g.closetag_filetypes = "eruby,template,typescriptreact,javascriptreact,svelte"
+vim.g.closetag_filetypes = "eruby,template,typescriptreact,javascriptreact,svelte,html"
 
 -- Bootstrap the Plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -53,8 +47,8 @@ require("lazy").setup({
 				"tsserver",
 				"eslint",
 				"solargraph",
-				"clojure_lsp",
-        "tailwindcss",
+				"ocamllsp",
+				-- "clojure-lsp"
 			},
 			handlers = {
 				function(server_name)
@@ -70,11 +64,6 @@ require("lazy").setup({
 						},
 					})
 				end,
-        ["tailwindcss"] = function() 
-          require("lspconfig").tailwindcss.setup({
-            filetypes = { "eruby" }
-          })
-        end
 			},
 		},
 	},
@@ -86,13 +75,10 @@ require("lazy").setup({
 	},
 	-- Manage auto pairs
 	{
-		"jiangmiao/auto-pairs",
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		opts = {},
 	},
-	-- {
-	-- 	"windwp/nvim-autopairs",
-	-- 	event = "InsertEnter",
-	-- 	opts = {},
-	-- },
 	-- Manage HTML completions
 	"alvan/vim-closetag",
 	-- Manage snippets
@@ -150,9 +136,6 @@ require("lazy").setup({
 						require("snippy").expand_snippet(args.body)
 					end,
 				},
-				completion = {
-					autocomplete = false,
-				},
 				mapping = cmp.mapping.preset.insert({
 					["<C-b>"] = cmp.mapping.scroll_docs(-4),
 					["<C-f>"] = cmp.mapping.scroll_docs(4),
@@ -197,6 +180,10 @@ require("lazy").setup({
 			vim.api.nvim_set_keymap("n", "<leader>sh", ":Telescope help_tags<CR>", { noremap = true, silent = true })
 		end,
 	},
+	-- Manage editing Clojure
+	{
+		"Olical/conjure",
+	},
 	-- Manage Formatting
 	{
 		"sbdchd/neoformat",
@@ -223,9 +210,5 @@ require("lazy").setup({
 			"yuezk/vim-js",
 			"HerringtonDarkholme/yats.vim",
 		},
-	},
-	-- Clojure
-	{
-		"Olical/conjure",
 	},
 })

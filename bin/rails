@@ -1,21 +1,26 @@
 #!/usr/bin/env ruby
 #
-# Shim around 'rails' so that I always execute the correct command.
+# Shim around 'rails' so that typing 'rails' and 'rails s' in the CLI always 
+# behaves correctly.
 #
 def find_project_root(dir)
-  raise RuntimeError('Could not find git repository') unless dir != '/'
+  return "/" if dir == '/'
 
   return dir if (Dir.entries dir).any? { |x| x == '.git' }
 
-  find_root(File.expand_path(dir))
+  find_project_root(File.expand_path(File.dirname(dir)))
 end
 
 PROJECT_ROOT = find_project_root(Dir.pwd)
 
 DEV = File.join(PROJECT_ROOT, 'bin', 'dev')
 
+RAILS = File.join(find_project_root(Dir.pwd), 'bin', 'rails')
+
 if ARGV.first == 's' && File.exist?(DEV)
   exec(DEV)
+elsif File.exist?(RAILS)
+  exec("#{RAILS} #{ARGV.join(' ')}")
 else
-  exec("#{File.join(find_project_root(Dir.pwd), 'bin', 'rails')} #{ARGV.join(' ')}")
+  exec("rbenv exec rails #{ARGV.join(' ')}")
 end
