@@ -19,7 +19,7 @@ vim.api.nvim_set_keymap("n", "<leader>f", "za", { noremap = true, silent = true 
 -- Make sure that vim-closetag works on ERB files. We have to set this
 -- global variable *before* we configure our plugin manager; otherwise,
 -- the plugin doesn't actually work for mysterious raisins.
-vim.g.closetag_filetypes = "eruby,template,typescriptreact,javascriptreact,svelte"
+vim.g.closetag_filetypes = "eruby,template,typescriptreact,javascriptreact,vue,html"
 
 -- Bootstrap the Plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -49,12 +49,12 @@ require("lazy").setup({
 			ensure_installed = {
 				"pyright",
 				"gopls",
-				"svelte",
 				"tsserver",
 				"eslint",
 				"solargraph",
 				"clojure_lsp",
-        "tailwindcss",
+				"tailwindcss",
+				"volar",
 			},
 			handlers = {
 				function(server_name)
@@ -70,11 +70,11 @@ require("lazy").setup({
 						},
 					})
 				end,
-        ["tailwindcss"] = function() 
-          require("lspconfig").tailwindcss.setup({
-            filetypes = { "eruby" }
-          })
-        end
+				["tailwindcss"] = function()
+					require("lspconfig").tailwindcss.setup({
+						filetypes = { "eruby", "typescriptreact" },
+					})
+				end,
 			},
 		},
 	},
@@ -88,11 +88,6 @@ require("lazy").setup({
 	{
 		"jiangmiao/auto-pairs",
 	},
-	-- {
-	-- 	"windwp/nvim-autopairs",
-	-- 	event = "InsertEnter",
-	-- 	opts = {},
-	-- },
 	-- Manage HTML completions
 	"alvan/vim-closetag",
 	-- Manage snippets
@@ -207,15 +202,31 @@ require("lazy").setup({
 				args = { "fix" },
 				replace = 1,
 			}
+			vim.g.neoformat_enabled_python = { "ruff" }
 			vim.g.neoformat_enabled_clojure = { "cljfmt" }
 		end,
 	},
+	-- Manage JSDOC
+	{
+		"heavenshell/vim-jsdoc",
+		build = "make install",
+	},
 	-- Manage Syntax Highlighting
-	--
-	-- If and when indentation and syntax highlighting in React and Svelte files
-	-- works with TreeSitter, we might want to consider using that; until then,
-	-- the classic plugins will suffice.
-	--
+	{
+		"nvim-treesitter/nvim-treesitter",
+		config = function()
+			local configs = require("nvim-treesitter.configs")
+			configs.setup({
+				ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html" },
+				sync_install = false,
+				highlight = {
+					enable = true,
+					disable = { "typescriptreact", "javascript", "typescript", "python", "html" },
+				},
+				indent = { enable = true },
+			})
+		end,
+	},
 	-- JSX
 	{
 		"maxmellon/vim-jsx-pretty",
