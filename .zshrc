@@ -1,13 +1,7 @@
 #!/usr/bin/env zsh
 set -o vi
 setopt autocd
-# setopt PROMPT_SUBST
 
-# prompt_message() { 
-#   printf "%s@%s$ " "$(basename "$(pwd)")" "$(git rev-parse --abbrev-ref HEAD 2>/dev/null || printf "(none)") " 
-# }
-
-# export PS1='$(prompt_message)'
 source ${HOME}/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ${HOME}/.zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 source ${HOME}/.agkozak-zsh-prompt/agkozak-zsh-prompt.plugin.zsh
