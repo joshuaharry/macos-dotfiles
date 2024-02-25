@@ -19,7 +19,7 @@ vim.api.nvim_set_keymap("n", "<leader>f", "za", { noremap = true, silent = true 
 -- Make sure that vim-closetag works on ERB files. We have to set this
 -- global variable *before* we configure our plugin manager; otherwise,
 -- the plugin doesn't actually work for mysterious raisins.
-vim.g.closetag_filetypes = "eruby,template,typescriptreact,javascriptreact,vue,html"
+vim.g.closetag_filetypes = "astro,eruby,template,typescriptreact,javascriptreact,vue,html,heex"
 
 -- Bootstrap the Plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -54,7 +54,7 @@ require("lazy").setup({
 				"solargraph",
 				"clojure_lsp",
 				"tailwindcss",
-				"volar",
+        "astro"
 			},
 			handlers = {
 				function(server_name)
@@ -72,7 +72,7 @@ require("lazy").setup({
 				end,
 				["tailwindcss"] = function()
 					require("lspconfig").tailwindcss.setup({
-						filetypes = { "eruby", "typescriptreact" },
+						filetypes = { "heex", "eruby", "typescriptreact", "html", "astro" },
 					})
 				end,
 			},
@@ -202,6 +202,12 @@ require("lazy").setup({
 				args = { "fix" },
 				replace = 1,
 			}
+			vim.g.neoformat_heex_mixfmt = {
+				exe = "mix",
+				args = { "format", '--stdin-filename="%:t"', "-" },
+				stdin = 1,
+			}
+			vim.g.neoformat_enabled_heex = { "mixfmt" }
 			vim.g.neoformat_enabled_python = { "ruff" }
 			vim.g.neoformat_enabled_clojure = { "cljfmt" }
 		end,
@@ -211,13 +217,28 @@ require("lazy").setup({
 		"heavenshell/vim-jsdoc",
 		build = "make install",
 	},
+  -- Manage Astro
+  {
+    "wuelnerdotexe/vim-astro"
+  },
 	-- Manage Syntax Highlighting
 	{
 		"nvim-treesitter/nvim-treesitter",
 		config = function()
 			local configs = require("nvim-treesitter.configs")
 			configs.setup({
-				ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html" },
+				ensure_installed = {
+					"c",
+					"lua",
+					"vim",
+					"vimdoc",
+					"query",
+					"elixir",
+					"heex",
+					"javascript",
+					"html",
+					"heex",
+				},
 				sync_install = false,
 				highlight = {
 					enable = true,
