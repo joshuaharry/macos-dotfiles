@@ -7,4 +7,5 @@
 ~/.zsh-autosuggestions
 ~/.agkozak-zsh-prompt
 ~/.zshrc
+~/.inputrc
 ~/bin
